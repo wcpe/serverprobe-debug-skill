@@ -1,0 +1,8 @@
+# eval 产物与工作区
+*-workspace/
+evals/results/
+iteration-*/
+
+# 系统文件
+.DS_Store
+Thumbs.db
