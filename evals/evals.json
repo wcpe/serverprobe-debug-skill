@@ -1,0 +1,23 @@
+{
+  "skill_name": "serverprobe-mcp-debug",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我在 F:/Game/MinecraftTest/s2 有个 Paper 1.20.1 测试服（Java 17 在 C:/Users/Admin/.jdks/jbr-17.0.12）。帮我装上 ServerProbe 开启 MCP 控制面，然后连上去告诉我服务器现在的 TPS、内存和在线人数。",
+      "expected_output": "下载/部署 ServerProbe.jar 到 s2/plugins，配置 mcp.enabled=true，重启服务器，通过 MCP JSON-RPC 调 server_status 返回真实 TPS/内存/在线人数",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我那个测试服上装了 ServerProbe 且 MCP 已开在 9942 端口。最近服务器 TPS 有点低，帮我查一下是不是哪个插件导致的，用它的诊断工具分析一下。",
+      "expected_output": "按工作流：thread_top 看热点线程 → thread_dump 看卡点 → gc_stats 排除 GC 压力 → plugin_list/plugin_cpu 或 log_search 定位可疑插件，给出结论与证据",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "用 ServerProbe 的火焰图功能看看我 WSL 里那个服务器（home/wxys233/mc-test）CPU 都花在哪了，给我个火焰图文件。",
+      "expected_output": "确认 Linux 环境（async-profiler 可用）→ flamegraph_start → 等待采样 → flamegraph_stop → flamegraph_view 或直接取回 artifacts 下的 HTML 文件并告知路径",
+      "files": []
+    }
+  ]
+}

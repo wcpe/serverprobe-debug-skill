@@ -83,8 +83,14 @@ curl -s -X POST $MCP -H "Content-Type: application/json" \
 1. `plugin_list` 确认插件已加载、`plugin_classes` 拿到它的类名（不用猜包名）
 2. `log_search {"keyword":"<插件名>"}` 找报错堆栈 → 拿到出错的类和方法
 3. `plugin_threads {"plugin":"<名>"}` 看它是否卡线程
-4. `arthas_trace {"className":"<类>","methodName":"<方法>"}` 挂追踪 → 复现问题 → `arthas_task_status`/`arthas_task_output` 读结果
-5. `arthas_ognl` 读插件内部对象状态验证猜测
+4. 深度探查（类是否加载/反编译源码/方法观测/读内部状态/热修复）→ **详见 [references/deep-diagnosis.md](references/deep-diagnosis.md)**，快速索引：
+   - 类是否加载+来自哪个 jar：`arthas_execute {"command":"sc -d <类名>"}`
+   - 反编译核验源码：`arthas_execute {"command":"jad <类名> <方法名>"}`
+   - 观察方法参数/返回值/异常：`arthas_watch {"className":"<类>","methodName":"<方法>","expression":"{params,returnObj,throwExp}"}`
+   - 调用链耗时（慢在哪一行）：`arthas_trace`；调用来源：`arthas_execute {"command":"stack <类> <方法>"}`
+   - 读内部状态（静态字段/实例）：`arthas_ognl {"expression":"@<类>@<字段>"}` 或 `arthas_execute {"command":"vmtool --action getInstances --className <类> -x 2"}`
+   - 热修复闭环（jad→mc 编译→redefine→revert）：见参考文件 §5
+5. 完整实例剧本（"玩家用某功能报 NPE"从堆栈到根因的逐命令序列）也在参考文件 §7
 
 **场景 C：玩家相关异常**
 1. `player_lookup {"name":"<玩家名>"}` 拿位置/状态/背包摘要/最近事件链路
