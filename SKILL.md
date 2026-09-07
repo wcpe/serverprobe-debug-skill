@@ -103,7 +103,7 @@ curl -s -X POST $MCP -H "Content-Type: application/json" \
 ## 5. 环境坑（实测踩过，直接规避）
 
 **Windows**：
-- 服务器需 Java 17+；系统默认 Java 8 时显式用 JDK17 全路径启动，如 `& "C:\Users\<u>\.jdks\jbr-17.0.12\bin\java.exe" -jar paper.jar`
+- 服务器需 Java 17+；系统默认 Java 8 时显式用 JDK17 全路径启动，如 `"C:/Users/<用户>/.jdks/<jdk17>/bin/java.exe" -jar paper.jar`（或 Linux/WSL 侧 `/usr/lib/jvm/<jdk17>/bin/java`）
 - async-profiler **不支持 Windows**：`flamegraph_start` 会返回 "Only support Linux/Mac"，属平台限制非故障；Windows 上做 CPU 分析改用 `arthas_execute {"command":"profiler start"}` 也一样不行，需 Linux 环境或 spark 插件
 
 **WSL（Linux）**：

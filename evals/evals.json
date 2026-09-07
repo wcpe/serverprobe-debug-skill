@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "我在 F:/Game/MinecraftTest/s2 有个 Paper 1.20.1 测试服（Java 17 在 C:/Users/Admin/.jdks/jbr-17.0.12）。帮我装上 ServerProbe 开启 MCP 控制面，然后连上去告诉我服务器现在的 TPS、内存和在线人数。",
+      "prompt": "我本地有个 Paper 1.20.1 测试服目录（如 <服务器根目录>，机器上装有 Java 17，路径类似 C:/Users/<用户>/.jdks/jbr-17.0.12 或 /usr/lib/jvm/jdk-17）。帮我装上 ServerProbe 开启 MCP 控制面，然后连上去告诉我服务器现在的 TPS、内存和在线人数。",
       "expected_output": "下载/部署 ServerProbe.jar 到 s2/plugins，配置 mcp.enabled=true，重启服务器，通过 MCP JSON-RPC 调 server_status 返回真实 TPS/内存/在线人数",
       "files": []
     },
@@ -15,7 +15,7 @@
     },
     {
       "id": 3,
-      "prompt": "用 ServerProbe 的火焰图功能看看我 WSL 里那个服务器（home/wxys233/mc-test）CPU 都花在哪了，给我个火焰图文件。",
+      "prompt": "用 ServerProbe 的火焰图功能看看我 Linux（WSL）服务器目录（如 ~/mc-test）里那台服务器 CPU 都花在哪了，给我个火焰图文件。",
       "expected_output": "确认 Linux 环境（async-profiler 可用）→ flamegraph_start → 等待采样 → flamegraph_stop → flamegraph_view 或直接取回 artifacts 下的 HTML 文件并告知路径",
       "files": []
     }
