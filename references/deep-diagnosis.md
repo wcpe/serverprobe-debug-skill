@@ -60,11 +60,23 @@ arthas_execute {"command":"getstatic com.example.plugin.Foo CACHE","timeoutMilli
 arthas_ognl {"expression":"@com.example.plugin.Foo@CACHE.size()"}
 ```
 
-**拿实例再读字段**（4.x 的 vmtool 比 ognl 搜实例快且稳）：
+**拿实例再读字段**：
 
 ```json
-arthas_execute {"command":"vmtool --action getInstances --className com.example.plugin.Foo --limit 3 -x 2","timeoutMillis":15000}
+arthas_ognl {"expression":"#cls=@java.lang.Class@forName('com.example.plugin.Foo'), #insts=@java.util.Collections@newArrayList(@com.example.plugin.Foo@ALL_INSTANCES)"}
 ```
+
+> **⚠️ vmtool 不可用**：`vmtool --action getInstances` 依赖 Arthas JNI 库（`ArthasJniLibrary`），本插件的内存 Shell 闭包未包含该库，调用会报 `no ArthasJniLibrary in java.library.path`（WSL 真机实测）。**读实例状态的可用路径**：
+> 1. **ognl 静态入口链式取**：插件把实例挂在静态字段/注册表时（最常见），`@com.example.plugin.Foo@INSTANCES.get('key').someField`
+> 2. **watch 时机读**：`watch <类> <方法> '{target, target.someField}' -x 3`——方法执行时 `target` 就是实例
+> 3. **tt 回放**：`tt -t` 录制后 `tt -w -i <index> '{target}'` 读当时实例
+>
+> **实战例子**：插件说"已把玩家加入冷却表"，验证一下：
+>
+> ```json
+> arthas_ognl {"expression":"@com.example.plugin.Cooldowns@MAP.keySet().size()"}
+> arthas_ognl {"expression":"@com.example.plugin.Cooldowns@MAP.get('Steve')"}
+> ```
 
 - `-x 2` 展开深度（1=对象摘要，2-3 能看到字段值；太大输出会爆）
 - 配合 ognl 对实例求值：`vmtool --action getInstances --className com.example.plugin.Foo --expressions 'instances[0].someField'`
