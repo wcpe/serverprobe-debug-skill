@@ -1,0 +1,11 @@
+{
+  "name": "serverprobe-debug-skill",
+  "version": "1.0.0",
+  "description": "ServerProbe（Minecraft 服务器运维探针）MCP 深度诊断技能：部署探针 jar、开启 :9942/mcp 控制面、用 42 个工具完成指标/线程/插件/日志/Arthas 全链路远程诊断",
+  "author": {
+    "name": "wcpe"
+  },
+  "repository": "https://github.com/wcpe/serverprobe-debug-skill",
+  "keywords": ["minecraft", "serverprobe", "mcp", "debugging", "arthas", "paper", "folia", "bungeecord", "velocity"],
+  "skills": "./skills/"
+}

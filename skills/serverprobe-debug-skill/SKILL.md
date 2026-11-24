@@ -1,5 +1,5 @@
 ---
-name: serverprobe-debug
+name: serverprobe-debug-skill
 description: 从 GitHub 下载并部署 ServerProbe（Minecraft 服务器运维探针）到真实 Paper/Folia/BungeeCord/Velocity 服务器，通过 MCP（JSON-RPC over HTTP）连接其诊断控制面，用 42 个工具调试服务器与插件：读指标、执行命令、线程转储、日志检索、玩家诊断、Arthas 深度诊断（watch/trace/ognl/火焰图/类替换）。只要用户提到"装 ServerProbe/探针""调试 MC 服务器""看 TPS/内存/GC""MCP 连服务器诊断""下载部署 ServerProbe""排查插件卡顿或报错"，或想要通过 MCP 远程诊断 Minecraft 服务器，即使没说"ServerProbe"这个名字，也应用本技能。
 ---
 
