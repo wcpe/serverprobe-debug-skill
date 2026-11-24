@@ -5,9 +5,10 @@ Devin / Claude Code / Codex 三端兼容的 agent 插件：从 GitHub 下载并�
 ## 仓库布局
 
 ```
-plugin.json                  # Agent Plugins 通用清单（Devin / Codex portable 均识别）
-.claude-plugin/plugin.json   # Claude Code 插件清单
-.codex-plugin/plugin.json    # Codex 兼容清单（fallback）
+plugin.json                     # Agent Plugins 通用清单（Devin / Codex portable 均识别）
+.claude-plugin/plugin.json      # Claude Code 插件清单
+.claude-plugin/marketplace.json # 本仓库同时即插件市场（自托管）
+.codex-plugin/plugin.json       # Codex 兼容清单（fallback）
 skills/serverprobe-debug-skill/
   SKILL.md                   # 技能正文
   references/                # Arthas 深度诊断参考
@@ -18,17 +19,27 @@ skills/serverprobe-debug-skill/
 
 **Devin**：Settings → Plugins 安装本仓库（识别根 `plugin.json`），或在会话中让 Devin 执行 `manage_plugin` 安装 `wcpe/serverprobe-debug-skill`。
 
-**Claude Code**：
+**Claude Code**（仓库自带 `.claude-plugin/marketplace.json`，即自托管市场）：
 
 ```bash
-# 方式一：作为插件装入 marketplace
-claude plugin install wcpe/serverprobe-debug-skill
-# 方式二：直接把技能目录放到 skills 路径
+claude plugin marketplace add wcpe/serverprobe-debug-skill
+claude plugin install serverprobe-debug-skill@serverprobe-debug-skill
+```
+
+或直接把技能目录放到 skills 路径：
+
+```bash
 git clone https://github.com/wcpe/serverprobe-debug-skill.git /tmp/spds \
   && cp -r /tmp/spds/skills/serverprobe-debug-skill ~/.claude/skills/
 ```
 
 **Codex**：插件指向本仓库即可，根 `plugin.json`（Agent Plugins 格式）声明 `skills: "./skills/"`；兼容清单 `.codex-plugin/plugin.json` 同时提供。
+
+## 从旧版仓库（serverprobe-mcp-debug）迁移
+
+- 旧仓库已改名，旧 URL 自动重定向，无需改 remote 也能 fetch/push。
+- 若你曾把旧仓库整仓 clone 到 `~/.claude/skills/serverprobe-mcp-debug`：`git pull` 后技能文件移入 `skills/` 子目录，Claude Code 不再从仓库根加载它。按上面的方式二重新复制 `skills/serverprobe-debug-skill/` 到 `~/.claude/skills/` 即可。
+- 评测集 `skill_name` 已同步为 `serverprobe-debug-skill`。
 
 ## 能力
 
